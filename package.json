@@ -1,0 +1,77 @@
+{
+  "name": "vitest-environment-testcontainers",
+  "version": "0.0.0",
+  "description": "Vitest testing environment with Testcontainers",
+  "license": "MIT",
+  "main": "lib/cjs/index.js",
+  "types": "lib/types/index.d.ts",
+  "homepage": "https://github.com/dextertanyj/vitest-environment-testcontainers",
+  "author": {
+    "name": "Dexter Tan",
+    "email": "dev@dextertanyj.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dextertanyj/vitest-environment-testcontainers"
+  },
+  "exports": {
+    ".": {
+      "import": "./lib/esm/index.js",
+      "require": "./lib/cjs/index.js",
+      "types": "./lib/types/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "*.md",
+    "lib",
+    "src"
+  ],
+  "keywords": [
+    "vitest",
+    "vitest-environment",
+    "testing",
+    "integration",
+    "testcontainers",
+    "docker"
+  ],
+  "scripts": {
+    "prepare": "husky install",
+    "pre-commit": "lint-staged",
+    "prepack": "npm run build",
+    "build": "npm run build:esm && npm run build:cjs && npm run build:types",
+    "build:esm": "tsc -p tsconfig.esm.json",
+    "build:cjs": "tsc -p tsconfig.cjs.json",
+    "build:types": "tsc -p tsconfig.types.json",
+    "lint": "eslint --ext ts,js .",
+    "lint:fix": "eslint --fix --ext ts,js .",
+    "clean": "git clean -xdf node_modules lib",
+    "version": "auto-changelog -p && git add CHANGELOG.md"
+  },
+  "dependencies": {
+    "testcontainers": "^10.2.1"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^17.7.1",
+    "@commitlint/config-conventional": "^17.7.0",
+    "@types/dockerode": "^3.3.19",
+    "@typescript-eslint/eslint-plugin": "^6.4.0",
+    "@typescript-eslint/parser": "^6.4.0",
+    "auto-changelog": "^2.4.0",
+    "eslint": "^8.47.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "eslint-plugin-simple-import-sort": "^10.0.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^14.0.0",
+    "prettier": "^3.0.2",
+    "typescript": "^5.1.6",
+    "vitest": "^0.34.4"
+  },
+  "lint-staged": {
+    "**/*.(js|jsx|ts|tsx)": [
+      "prettier --write",
+      "eslint --fix"
+    ]
+  }
+}
