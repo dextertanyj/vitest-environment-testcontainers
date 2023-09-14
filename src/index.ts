@@ -1,19 +1,7 @@
-import type { Environment, EnvironmentOptions as EO } from "vitest";
+import type { Environment } from "vitest";
 
-import { ContainerConfiguration, setup } from "./setup";
-
-export type ContainerConfigurations = ContainerConfiguration[];
-
-export interface EnvironmentOptions extends EO {
-  testcontainers?: {
-    containers?: ContainerConfigurations;
-  };
-}
-
-declare global {
-  // eslint-disable-next-line no-var
-  var testcontainers: { containers: Awaited<ReturnType<typeof setup>> };
-}
+import { setup } from "./setup";
+import { ContainerInformation, EnvironmentOptions } from "./types";
 
 export default {
   name: "testcontainers",
@@ -30,7 +18,8 @@ export default {
       value: {
         containers: containers.map((container) => {
           const { container: _, ...rest } = container;
-          return rest;
+          const result: ContainerInformation = rest;
+          return result;
         }),
       },
       configurable: true,

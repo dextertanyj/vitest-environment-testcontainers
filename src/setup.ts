@@ -1,32 +1,6 @@
 import { GenericContainer, StartedTestContainer, Wait } from "testcontainers";
 
-interface PortWaitStrategy {
-  type: "PORT";
-}
-
-interface LogWaitStrategy {
-  type: "LOG";
-  message: string;
-  times?: number;
-}
-
-interface HealthCheckWaitStrategy {
-  type: "HEALTHCHECK";
-}
-
-type WaitStrategy = { timeout?: number } & (
-  | PortWaitStrategy
-  | LogWaitStrategy
-  | HealthCheckWaitStrategy
-);
-
-export interface ContainerConfiguration {
-  name: string;
-  image: string;
-  ports?: (number | { container: number; host: number })[];
-  environment?: Record<string, string>;
-  wait?: WaitStrategy;
-}
+import { ContainerConfiguration } from "./types";
 
 export const setup = async (
   configurations: ContainerConfiguration[],
