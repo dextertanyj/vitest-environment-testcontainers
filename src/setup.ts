@@ -1,17 +1,8 @@
-import { GenericContainer, StartedTestContainer, Wait } from "testcontainers";
+import { GenericContainer, Wait } from "testcontainers";
 
 import { ContainerConfiguration } from "./types";
 
-export const setup = async (
-  configurations: ContainerConfiguration[],
-): Promise<
-  readonly {
-    name: string;
-    container: StartedTestContainer;
-    host: string;
-    ports: { container: number; host: number }[];
-  }[]
-> => {
+export const setup = async (configurations: ContainerConfiguration[]) => {
   const containerTemplates = configurations.map((configuration) => {
     const { name, image, ports = [], environment, wait } = configuration;
     let container = new GenericContainer(image);
@@ -47,12 +38,13 @@ export const setup = async (
       name,
       container,
       ports: ports.map((port) => (typeof port === "number" ? port : port.container)),
+      configuration,
     };
   });
 
   const startedContainers = await Promise.all(
     containerTemplates.map(async (containerTemplate) => {
-      const { name, container, ports } = containerTemplate;
+      const { container, ports } = containerTemplate;
 
       const startedContainer = await container.start();
 
@@ -64,10 +56,10 @@ export const setup = async (
       }));
 
       return {
-        name,
-        container: startedContainer,
+        ...containerTemplate,
         host,
         ports: mappedPorts,
+        container: startedContainer,
       };
     }),
   );

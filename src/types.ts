@@ -45,4 +45,5 @@ export interface ContainerInformation {
   name: string;
   host: string;
   ports: { container: number; host: number }[];
+  configuration: ContainerConfiguration;
 }
