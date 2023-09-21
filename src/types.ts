@@ -44,6 +44,6 @@ export interface EnvironmentOptions extends EO {
 export interface ContainerInformation {
   name: string;
   host: string;
-  ports: { container: number; host: number }[];
+  ports: Map<number, number>;
   configuration: ContainerConfiguration;
 }

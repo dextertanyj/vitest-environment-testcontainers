@@ -50,10 +50,11 @@ export const setup = async (configurations: ContainerConfiguration[]) => {
 
       const host = startedContainer.getHost();
 
-      const mappedPorts = ports.map((port) => ({
-        container: port,
-        host: startedContainer.getMappedPort(port),
-      }));
+      const mappedPorts = new Map<number, number>();
+
+      for (const port of ports) {
+        mappedPorts.set(port, startedContainer.getMappedPort(port));
+      }
 
       return {
         ...containerTemplate,
