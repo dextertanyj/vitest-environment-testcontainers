@@ -45,18 +45,18 @@ const environmentOptions: EnvironmentOptions = {
   testcontainers: {
     containers: [
       {
-        name: 'database'
-        image: 'postgres:latest'
+        name: "database",
+        image: "postgres:latest",
         ports: [5432],
         environment: {
-          POSTGRES_USER: 'root',
-          POSTGRES_PASSWORD: 'root',
-          POSTGRES_DB: 'test'
-        }
+          POSTGRES_USER: "root",
+          POSTGRES_PASSWORD: "root",
+          POSTGRES_DB: "test",
+        },
         wait: {
-          type: 'PORT'
-        }
-      }
+          type: "PORT",
+        },
+      },
     ],
   },
 };
@@ -72,13 +72,28 @@ export default defineConfig({
 
 **4. Get information about the containers inside your tests.**
 
-Retrieve information about started containers through the global object.
-
 ```ts
 describe("Test", () => {
-  // Type: Array<{ name: string; host: string; ports: Array<{ container: number; host: number }>;
   const containers = globalThis.testcontainers.containers;
 
   // ...
 });
 ```
+
+The `containers` array contains objects of the following type:
+
+```ts
+{
+  name: string;
+  host: string;
+  ports: Map<number, number>;
+  configuration: ContainerConfiguration;
+}
+```
+
+| Property        | Description                                                                          |
+| --------------- | ------------------------------------------------------------------------------------ |
+| `name`          | The name of the container as specified in the environment options.                   |
+| `host`          | The hostname by which the container is accessible from.                              |
+| `ports`         | A mapping of exposed container ports to their respective host ports.                 |
+| `configuration` | The original configuration of the container as specified in the environment options. |
