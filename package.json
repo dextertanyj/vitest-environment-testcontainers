@@ -51,6 +51,9 @@
   "dependencies": {
     "testcontainers": "^10.2.1"
   },
+  "peerDependencies": {
+    "vitest": ">=0.30.0"
+  },
   "devDependencies": {
     "@commitlint/cli": "^17.7.1",
     "@commitlint/config-conventional": "^17.7.0",
