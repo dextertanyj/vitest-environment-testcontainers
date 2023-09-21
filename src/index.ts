@@ -34,3 +34,5 @@ export default {
     };
   },
 } as Environment;
+
+export * from "./types";
